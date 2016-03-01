@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # Automatic Image file resizer
 # Written by SirLagz
 strImgFile=$1

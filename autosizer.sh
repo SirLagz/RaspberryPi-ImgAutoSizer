@@ -22,7 +22,7 @@ echo "Error : Not an image file, or file doesn't exist"
 exit
 fi
 
-partinfo=`parted -m $1 unit B print`
+partinfo=`parted -s -m $1 unit B print`
 partnumber=`echo "$partinfo" | grep ext4 | awk -F: ' { print $1 } '`
 partstart=`echo "$partinfo" | grep ext4 | awk -F: ' { print substr($2,0,length($2)-1) } '`
 loopback=`losetup -f --show -o $partstart $1`
@@ -34,7 +34,7 @@ sleep 1
 losetup -d $loopback
 partnewsize=`echo "$minsize * 4096" | bc`
 newpartend=`echo "$partstart + $partnewsize" | bc`
-part1=`parted $1 rm 2`
-part2=`parted $1 unit B mkpart primary $partstart $newpartend`
-endresult=`parted -m $1 unit B print free | tail -1 | awk -F: ' { print substr($2,0,length($2)-1) } '`
+part1=`parted -s $1 rm 2`
+part2=`parted -s $1 unit B mkpart primary $partstart $newpartend`
+endresult=`parted -s -m $1 unit B print free | tail -1 | awk -F: ' { print substr($2,0,length($2)-1) } '`
 truncate -s $endresult $1

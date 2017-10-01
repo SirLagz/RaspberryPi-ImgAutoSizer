@@ -1,6 +1,7 @@
 #!/bin/bash -e
 # Automatic Image file resizer
 # Written by SirLagz
+# https://github.com/SirLagz/RaspberryPi-ImgAutoSizer
 strImgFile=$1
 extraSpaceMB=$2
 
